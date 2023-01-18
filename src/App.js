@@ -1,23 +1,33 @@
+import { useState } from 'react'
 import logo from './logo.svg';
 import './App.css';
+import Counter from './Counter'
 
 function App() {
+  const [count, setCount] = useState([1,4,3])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {count.map((value, index) => {
+        return (
+          <Counter
+            label={`counter ${index}`}
+            value={value}
+
+            increment={() => {
+              const newCount = [...count]
+              newCount[index] += 1
+              setCount(newCount)
+            }}
+
+            decrement={() => {
+              const newCount = [...count]
+              newCount[index] -= 1
+              setCount(newCount)
+            }}
+          />)
+      })}
+      <h1>Total Count</h1>
+      <h1>{count.reduce((acc, n) => acc += n)}</h1>
     </div>
   );
 }
